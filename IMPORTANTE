@@ -1,0 +1,1 @@
+Correr el proyecto con la base de datos del git, hubo error corriendo con letras mayúsculas a pesar de incluir el código necesario en application.properties.
