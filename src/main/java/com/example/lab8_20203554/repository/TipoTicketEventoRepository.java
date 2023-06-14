@@ -10,6 +10,6 @@ import java.util.List;
 
 @Repository
 public interface TipoTicketEventoRepository extends JpaRepository<TipoTicketEvento, Integer> {
-    @Query(nativeQuery = true, value = "SELECT e.*, t.* FROM evento e inner join tipo_ticket_evento t on (t.idEvento=e.id) where e.id = ?")
-    List<Evento>
+    @Query(nativeQuery = true, value = "SELECT e.*, t.* FROM evento e inner join tipo_ticket_evento t on (t.idEvento=e.id) where e.id = ?1")
+    List<TipoTicketEvento> encontrarPorEvento (int id);
 }

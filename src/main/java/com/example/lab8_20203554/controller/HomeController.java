@@ -2,6 +2,7 @@ package com.example.lab8_20203554.controller;
 
 import com.example.lab8_20203554.entity.Evento;
 import com.example.lab8_20203554.repository.EventoRepository;
+import com.example.lab8_20203554.repository.TipoTicketEventoRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -15,9 +16,11 @@ import java.util.List;
 public class HomeController {
 
     final EventoRepository eventoRepository;
+    final TipoTicketEventoRepository tipoTicketEventoRepository;
 
-    public HomeController(EventoRepository eventoRepository) {
+    public HomeController(EventoRepository eventoRepository, TipoTicketEventoRepository tipoTicketEventoRepository) {
         this.eventoRepository = eventoRepository;
+        this.tipoTicketEventoRepository = tipoTicketEventoRepository;
     }
 
     @ResponseBody
@@ -81,7 +84,7 @@ public class HomeController {
         HashMap<String,Object> response = new HashMap<>();
         try {
             int idNum = Integer.parseInt(id);
-            if (eventoRepository.findById(idNum).isPresent()) {
+            if (tipoTicketEventoRepository.encontrarPorEvento(idNum)!=null) {
                 response.put("evento", eventoRepository.findById(idNum).get());
                 response.put("resultado", "exitoso");
                 return ResponseEntity.ok(response);
