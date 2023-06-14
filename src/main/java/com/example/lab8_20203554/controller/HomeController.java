@@ -84,12 +84,20 @@ public class HomeController {
         HashMap<String,Object> response = new HashMap<>();
         try {
             int idNum = Integer.parseInt(id);
-            if (tipoTicketEventoRepository.encontrarPorEvento(idNum)!=null) {
-                response.put("evento", eventoRepository.findById(idNum).get());
+            if (!tipoTicketEventoRepository.encontrarPorEvento(idNum).isEmpty()) {
+                Evento evento = eventoRepository.findById(idNum).get();
+                HashMap<String,Object> responseMap = new HashMap<>();
+                responseMap.put("id", evento.getId());
+                responseMap.put("nombre", evento.getNombre());
+                responseMap.put("descripcion", evento.getDescripcion());
+                responseMap.put("fecha", evento.getFecha());
+                responseMap.put("tipoDeTickets", tipoTicketEventoRepository.encontrarPorEvento(idNum));
+
+                response.put("eventoConTipoDeTicket", responseMap);
                 response.put("resultado", "exitoso");
                 return ResponseEntity.ok(response);
             } else {
-                response.put("msg", "Evento no encontrado");
+                response.put("msg", "No hay tipos encontrados");
             }
         }catch (NumberFormatException e){
             response.put("msg","el ID debe ser un número entero positivo");
